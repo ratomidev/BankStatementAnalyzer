@@ -38,5 +38,9 @@ public class BankTransaction {
     public int hashCode() {
         return Objects.hash(date, amount, description);
     }
+    @Override
+    public String toString() {
+        return this.getDate() +",  "+ this.getAmount()+", "+this.getDescription();
+    }
 
 }
