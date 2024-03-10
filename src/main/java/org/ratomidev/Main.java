@@ -1,13 +1,17 @@
 package org.ratomidev;
+import org.ratomidev.model.SummaryStatistics;
+
 import java.io.IOException;
 
 public class Main {
     public static void main(String[] args)  throws IOException{
         BankStatementParser bankStatementParser = new BankStatementCSVParser();
         BankStatementAnalyser bankStatementAnalyser = new BankStatementAnalyser();
-        bankStatementAnalyser.analyse("transactions.csv",
+        SummaryStatistics summaryStatistics = bankStatementAnalyser.analyse("transactions.csv",
                 bankStatementParser);
-        System.out.println("work");
+        Exporter htmlExporter = new JsonExporter();
+        String htmlPage = htmlExporter.export(summaryStatistics);
+        System.out.println(htmlPage);
 
     }
 }
