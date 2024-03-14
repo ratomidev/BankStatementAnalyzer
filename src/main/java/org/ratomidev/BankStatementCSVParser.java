@@ -2,28 +2,47 @@ package org.ratomidev;
 
 import org.ratomidev.model.BankTransaction;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BankStatementCSVParser implements BankStatementParser{
+    private static final String RESOURCES = "src/main/resources/";
     private static final DateTimeFormatter DATE_PATTERN
             = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-    @Override
-    public BankTransaction parseFrom(final String line) {
+
+    private BankTransaction parseFrom(final String line) {
         final String[] columns = line.split(",");
         final LocalDate date = LocalDate.parse(columns[0], DATE_PATTERN);
         final double amount = Double.parseDouble(columns[1]);
         final String description = columns[2];
         return new BankTransaction(date, amount, description);
     }
-    @Override
-    public List<BankTransaction> parseLinesFrom(final List<String> lines) {
+
+    private List<BankTransaction> parseLinesFrom(final List<String> lines) {
         final List<BankTransaction> bankTransactions = new ArrayList<>();
         for(final String line: lines) {
             bankTransactions.add(parseFrom(line));
         }
         return bankTransactions;
+    }
+
+    @Override
+    public BankTransaction parseObject(Object object) {
+        return null;
+    }
+
+    @Override
+    public List<BankTransaction> parseFile(String fileName) throws IOException {
+        final Path path = Paths.get(RESOURCES + fileName);
+        final List<String> lines = Files.readAllLines(path);
+        List<BankTransaction> result = parseLinesFrom(lines);
+        return result;
+
     }
 }

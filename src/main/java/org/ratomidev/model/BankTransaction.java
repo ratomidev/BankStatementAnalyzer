@@ -25,6 +25,7 @@ public class BankTransaction {
         return description;
     }
 
+
     @Override
     public boolean equals(Object obj) {
         if(this == obj) return true;
@@ -34,6 +35,7 @@ public class BankTransaction {
                 date.equals(that.date) &&
                 description.equals(that.description);
         }
+
     @Override
     public int hashCode() {
         return Objects.hash(date, amount, description);

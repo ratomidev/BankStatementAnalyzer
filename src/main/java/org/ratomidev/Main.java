@@ -4,14 +4,19 @@ import org.ratomidev.model.SummaryStatistics;
 import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args)  throws IOException{
-        BankStatementParser bankStatementParser = new BankStatementCSVParser();
+    public static void main(String[] args) throws IOException {
+        BankStatementParser bankStatementParser = new BankStatementJSONParser();
         BankStatementAnalyser bankStatementAnalyser = new BankStatementAnalyser();
-        SummaryStatistics summaryStatistics = bankStatementAnalyser.analyse("transactions.csv",
+        SummaryStatistics summaryStatistics = bankStatementAnalyser.analyse("transactions.json",
                 bankStatementParser);
-        Exporter htmlExporter = new JsonExporter();
-        String htmlPage = htmlExporter.export(summaryStatistics);
-        System.out.println(htmlPage);
+        XmlExporter htmlExporter = new XmlExporter();
+        try {
+            String htmlPage = htmlExporter.export(summaryStatistics);
+            System.out.println(htmlPage);
+
+        } catch (Exception exception) {
+            System.out.println(exception);
+        }
 
     }
 }

@@ -5,12 +5,14 @@ public class SummaryStatistics {
     private final double max;
     private final double min;
     private final double average;
+
     public SummaryStatistics(final double sum, final double max, final double min,
                              final double average) {
         this.sum = sum;
         this.max = max;
         this.min = min;
         this.average = average;
+
     }
     public double getSum() {
         return sum;
@@ -24,4 +26,5 @@ public class SummaryStatistics {
     public double getAverage() {
         return average;
     }
+
 }

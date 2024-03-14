@@ -13,14 +13,13 @@ import java.util.List;
 public class BankStatementAnalyser {
     private static final String RESOURCES = "src/main/resources/";
 
-    public SummaryStatistics analyse(String filename,
+    public SummaryStatistics analyse(String fileName,
                                BankStatementParser bankStatementCSVParser
                                ) throws IOException {
-        final Path path = Paths.get(RESOURCES+filename);
-        final List<String> lines = Files.readAllLines(path);
+
 
         final List<BankTransaction> bankTransactions =
-                bankStatementCSVParser.parseLinesFrom(lines);
+                bankStatementCSVParser.parseFile(fileName);
         final BankStatementProcessor bankStatementProcessor = new BankStatementProcessor(bankTransactions);
 
         final SummaryStatistics summaryStatistics = new SummaryStatistics(bankStatementProcessor.calculateTotalAmount(),
